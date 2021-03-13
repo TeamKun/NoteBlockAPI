@@ -25,7 +25,7 @@ public class Song implements Cloneable
     private final int firstCustomInstrumentIndex;
     private final boolean isStereo;
 
-    private byte timeSignature;
+    private final byte timeSignature;
 
     public Song(Song other)
 	{
