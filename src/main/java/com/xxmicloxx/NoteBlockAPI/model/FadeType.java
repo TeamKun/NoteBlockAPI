@@ -1,8 +1,9 @@
 package com.xxmicloxx.NoteBlockAPI.model;
 
-public enum FadeType {
+public enum FadeType
+{
 
-	NONE,
-	LINEAR
+    NONE,
+    LINEAR
 
 }

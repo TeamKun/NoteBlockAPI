@@ -67,6 +67,7 @@ public class NBSDecoder {
 			int firstcustominstrument = 10; //Backward compatibility - most of songs with old structure are from 1.12
 			int firstcustominstrumentdiff;
 			int nbsversion = 0;
+			byte timeSignature = 0x4;
 			if (length == 0) {
 				nbsversion = dataInputStream.readByte();
 				firstcustominstrument = dataInputStream.readByte();
@@ -83,7 +84,7 @@ public class NBSDecoder {
 			float speed = readShort(dataInputStream) / 100f;
 			dataInputStream.readBoolean(); // auto-save
 			dataInputStream.readByte(); // auto-save duration
-			dataInputStream.readByte(); // x/4ths, time signature
+			timeSignature = dataInputStream.readByte(); // x/4ths, time signature
 			readInt(dataInputStream); // minutes spent on project
 			readInt(dataInputStream); // left clicks (why?)
 			readInt(dataInputStream); // right clicks (why?)
@@ -96,6 +97,7 @@ public class NBSDecoder {
 				readShort(dataInputStream); // loop start tick
 			}
 			short tick = -1;
+
 			while (true) {
 				short jumpTicks = readShort(dataInputStream); // jumps till next tick
 				//System.out.println("Jumps to next tick: " + jumpTicks);
@@ -186,7 +188,7 @@ public class NBSDecoder {
 			}
 
 			return new Song(speed, layerHashMap, songHeight, length, title, 
-					author, originalAuthor, description, songFile, firstcustominstrument, customInstrumentsArray, isStereo);
+					author, originalAuthor, description, songFile, firstcustominstrument, customInstrumentsArray, isStereo, timeSignature);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (EOFException e) {
